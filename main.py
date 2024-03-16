@@ -27,7 +27,7 @@ model = YOLO('best.pt')
 #             print("Human")
 # arduino.close()
 
-video_path = "test_video_2.mp4"
+video_path = "test_video_3.mp4"
 # video_path = 0
 cap = cv2.VideoCapture(video_path)
 # arduino = serial.Serial('COM7', 9600)
@@ -35,7 +35,7 @@ while cap.isOpened():
     success, frame = cap.read()
 
     if success:
-        results = model.predict(frame)
+        results = model.predict(frame, stream_buffer=False, conf=0.6, vid_stride=5, show_labels=True, show_conf=False)
         names = model.names
 
         for c in results[0].boxes.cls:
