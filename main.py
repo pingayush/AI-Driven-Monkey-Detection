@@ -27,10 +27,10 @@ model = YOLO('best.pt')
 #             print("Human")
 # arduino.close()
 
-video_path = "test_video.mp4"
+video_path = "test_video_2.mp4"
 # video_path = 0
 cap = cv2.VideoCapture(video_path)
-arduino = serial.Serial('COM7', 9600)
+# arduino = serial.Serial('COM7', 9600)
 while cap.isOpened():
     success, frame = cap.read()
 
@@ -42,11 +42,12 @@ while cap.isOpened():
             if names[int(c)] == '0':
                 print("Yes, it is a Monkey\n")
                 # winsound.Beep(frequency, duration)
-                arduino.write(b'Y')
+                # arduino.write(b'Y')
                 break
             else:
                 print("No Monkey detected\n")
         annotated_frame = results[0].plot()
+        annotated_frame = cv2.resize(annotated_frame, (640, 640))
         cv2.imshow("YOLOv8 Inference", annotated_frame)
         if cv2.waitKey(1) & 0xFF == ord("q"):
             break
@@ -54,4 +55,4 @@ while cap.isOpened():
         break
 cap.release()
 cv2.destroyAllWindows()
-arduino.close()
+# arduino.close()
