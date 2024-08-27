@@ -27,22 +27,22 @@ model = YOLO('best.pt')
 #             print("Human")
 # arduino.close()
 
-video_path = "test_video_3.mp4"
-# video_path = 0
+# video_path = "test_video_3.mp4"
+video_path = 0
 cap = cv2.VideoCapture(video_path)
-# arduino = serial.Serial('COM7', 9600)
+arduino = serial.Serial('COM7', 9600)
 while cap.isOpened():
     success, frame = cap.read()
 
     if success:
-        results = model.predict(frame, stream_buffer=False, conf=0.6, vid_stride=5, show_labels=True, show_conf=False)
+        results = model.predict(frame, stream_buffer=False, conf=0.7, vid_stride=5, show_labels=True, show_conf=True)
         names = model.names
 
         for c in results[0].boxes.cls:
             if names[int(c)] == '0':
                 print("Yes, it is a Monkey\n")
                 # winsound.Beep(frequency, duration)
-                # arduino.write(b'Y')
+                arduino.write(b'Y')
                 break
             else:
                 print("No Monkey detected\n")
@@ -55,4 +55,4 @@ while cap.isOpened():
         break
 cap.release()
 cv2.destroyAllWindows()
-# arduino.close()
+arduino.close()

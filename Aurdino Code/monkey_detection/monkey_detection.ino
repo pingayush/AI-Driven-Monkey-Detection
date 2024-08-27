@@ -1,5 +1,5 @@
-const int buzzerPin = 9;
-const int ledPin = 13;
+const int buzzerPin = 6;
+const int ledPin = 4;
 
 void setup() {
   pinMode(buzzerPin, OUTPUT); 
